@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebCloner AI – Intelligent Website Migration & Frontend Replicator</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+    <!-- Main Style Sheet -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- Three.js CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- JSZip CDN for actual code export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <!-- Confetti CDN for success explosion -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="theme-cyber-blue">
+    <!-- Three.js Background Canvas -->
+    <div id="canvas-container"></div>
+    
+    <!-- Cyber Grid Overlay Floor -->
+    <div class="cyber-grid-floor"></div>
+
+    <!-- Floating Browser Tabs (Background decoration) -->
+    <div class="floating-tabs-bg" id="floating-tabs"></div>
+
+    <!-- Main Wrapper -->
+    <div class="app-container">
+        
+        <!-- Header / Navigation -->
+        <header class="app-header glass-panel">
+            <div class="logo">
+                <span class="logo-icon"><i data-lucide="cpu"></i></span>
+                <span class="logo-text">WEBCLONER<span class="text-glow">.AI</span></span>
+            </div>
+            
+            <div class="header-center">
+                <div class="active-site-indicator" id="site-indicator" style="display: none;">
+                    <span class="indicator-dot pulse"></span>
+                    <span class="indicator-url" id="indicator-url-text">https://portfolio.dev</span>
+                </div>
+            </div>
+
+            <div class="header-controls">
+                <!-- Theme Selector -->
+                <div class="theme-selector-container">
+                    <button class="theme-toggle-btn glass-button" id="theme-btn" title="Switch Theme">
+                        <i data-lucide="palette"></i>
+                        <span id="active-theme-name">Cyber Blue</span>
+                    </button>
+                    <div class="theme-dropdown glass-panel" id="theme-dropdown">
+                        <button class="theme-option" data-theme="theme-cyber-blue"><span class="color-dot blue"></span>Cyber Blue</button>
+                        <button class="theme-option" data-theme="theme-neon-purple"><span class="color-dot purple"></span>Neon Purple</button>
+                        <button class="theme-option" data-theme="theme-emerald-matrix"><span class="color-dot matrix"></span>Emerald Matrix</button>
+                        <button class="theme-option" data-theme="theme-synthwave"><span class="color-dot synthwave"></span>Synthwave</button>
+                        <button class="theme-option" data-theme="theme-aurora"><span class="color-dot aurora"></span>Aurora</button>
+                        <button class="theme-option" data-theme="theme-midnight-glass"><span class="color-dot glass"></span>Midnight Glass</button>
+                    </div>
+                </div>
+                <button class="reset-btn glass-button" id="reset-btn" style="display: none;" title="Reset Workspace">
+                    <i data-lucide="refresh-cw"></i>
+                    <span>Reset</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Dynamic Main Content Views -->
+        <main class="main-content">
+
+            <!-- 1. LANDING PAGE VIEW -->
+            <section class="view-panel active" id="landing-view">
+                <div class="hero-section">
+                    <h1 class="hero-title">Intelligent Website Migration & <span class="text-gradient">Frontend Replicator</span></h1>
+                    <p class="hero-subtitle">Input an authorized web URL to deconstruct layout architectures, map dependency hierarchies, optimize static assets, and package a deployable clean-code codebase.</p>
+                </div>
+
+                <!-- Glow Search Bar Wrapper -->
+                <div class="search-wrapper">
+                    <div class="search-bar glass-panel" id="search-bar-container">
+                        <div class="laser-scanner" id="url-laser"></div>
+                        <span class="search-icon"><i data-lucide="globe"></i></span>
+                        <input type="text" id="target-url" placeholder="Enter Authorized Website URL (e.g., https://example.com)..." value="https://portfolio.dev">
+                        <button class="cta-button" id="start-scan-btn">
+                            <span>Start Analysis</span>
+                            <i data-lucide="arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Warnings & Confirmations -->
+                <div class="permission-check-container" id="permission-container">
+                    <label class="permission-label glass-panel">
+                        <input type="checkbox" id="auth-checkbox">
+                        <span class="custom-checkbox"></span>
+                        <span class="checkbox-text">I confirm that I own this website domain or have explicit authorization from the owner to copy, analyze, and replicate its assets.</span>
+                    </label>
+                </div>
+
+                <!-- Hero Dashboard Showcase cards -->
+                <div class="showcase-grid">
+                    <div class="showcase-card glass-panel tilt-card">
+                        <div class="card-icon"><i data-lucide="network"></i></div>
+                        <h3>Deep Graph Crawl</h3>
+                        <p>Maps HTML node structures, detects styles, external scripts, and displays them as a glowing dependency web.</p>
+                    </div>
+                    <div class="showcase-card glass-panel tilt-card">
+                        <div class="card-icon"><i data-lucide="orbit"></i></div>
+                        <h3>Asset Galaxy Physics</h3>
+                        <p>Visually arrays images, style declarations, SVGs, and web fonts as floating dynamic stellar bodies.</p>
+                    </div>
+                    <div class="showcase-card glass-panel tilt-card">
+                        <div class="card-icon"><i data-lucide="history"></i></div>
+                        <h3>Time Travel Replay</h3>
+                        <p>Record, pause, scrub, and replay the reconstruction pipeline step-by-step from raw scan to deployed source.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 2. SCANNING & DASHBOARD WORKSPACE VIEW -->
+            <section class="view-panel" id="dashboard-view">
+                
+                <!-- Main Workspace Grid layout -->
+                <div class="workspace-grid">
+                    
+                    <!-- LEFT COLUMN: SCANNER DETAILS & PROCESS -->
+                    <div class="workspace-col glass-panel" id="scan-panel">
+                        <div class="panel-header">
+                            <h2><i data-lucide="activity"></i> Replicator Scanner</h2>
+                            <span class="telemetry-badge" id="telemetry-percentage">0%</span>
+                        </div>
+                        
+                        <div class="scanner-progress-section">
+                            <!-- Circular Progress Scanner -->
+                            <div class="progress-ring-wrapper">
+                                <svg class="progress-ring" width="160" height="160">
+                                    <circle class="progress-ring-circle-bg" stroke="rgba(255,255,255,0.05)" stroke-width="6" fill="transparent" r="70" cx="80" cy="80"/>
+                                    <circle class="progress-ring-circle" id="progress-circle" stroke="var(--primary)" stroke-width="8" stroke-dasharray="440" stroke-dashoffset="440" stroke-linecap="round" fill="transparent" r="70" cx="80" cy="80"/>
+                                </svg>
+                                <div class="progress-ring-inner">
+                                    <span class="scanner-rate" id="telemetry-kbps">0 KB/s</span>
+                                    <span class="scanner-state-label" id="scanner-state-text">Initializing</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Progress Checkbox Steps -->
+                        <div class="scanner-steps-list">
+                            <div class="step-item" id="step-html">
+                                <span class="step-icon"><i data-lucide="circle"></i></span>
+                                <span class="step-label">Discovering HTML Node Tree</span>
+                                <span class="step-status">Pending</span>
+                            </div>
+                            <div class="step-item" id="step-css">
+                                <span class="step-icon"><i data-lucide="circle"></i></span>
+                                <span class="step-label">Extracting CSS Styling variables</span>
+                                <span class="step-status">Pending</span>
+                            </div>
+                            <div class="step-item" id="step-js">
+                                <span class="step-icon"><i data-lucide="circle"></i></span>
+                                <span class="step-label">Parsing Javascript logic files</span>
+                                <span class="step-status">Pending</span>
+                            </div>
+                            <div class="step-item" id="step-images">
+                                <span class="step-icon"><i data-lucide="circle"></i></span>
+                                <span class="step-label">Finding Images & SVG vector nodes</span>
+                                <span class="step-status">Pending</span>
+                            </div>
+                            <div class="step-item" id="step-fonts">
+                                <span class="step-icon"><i data-lucide="circle"></i></span>
+                                <span class="step-label">Resolving typography & fonts</span>
+                                <span class="step-status">Pending</span>
+                            </div>
+                            <div class="step-item" id="step-assets">
+                                <span class="step-icon"><i data-lucide="circle"></i></span>
+                                <span class="step-label">Optimizing static script weight</span>
+                                <span class="step-status">Pending</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CENTER COLUMN: VISUALIZERS (TABS SWITCHED) -->
+                    <div class="workspace-col glass-panel visualizer-container" id="visualizer-panel">
+                        <div class="visualizer-tabs">
+                            <button class="viz-tab active" data-tab="tab-core"><i data-lucide="orbit"></i> AI Core</button>
+                            <button class="viz-tab" data-tab="tab-graph"><i data-lucide="network"></i> Web Graph</button>
+                            <button class="viz-tab" data-tab="tab-galaxy"><i data-lucide="sparkles"></i> Asset Galaxy</button>
+                            <button class="viz-tab" data-tab="tab-preview"><i data-lucide="layout"></i> Live Preview</button>
+                        </div>
+                        
+                        <div class="visualizer-viewport">
+                            
+                            <!-- A. AI Core Sphere Viewport -->
+                            <div class="viz-content active" id="tab-core">
+                                <div class="core-globe-container" id="core-globe-canvas"></div>
+                                <div class="core-construction-zone">
+                                    <!-- Flying cubes are injected in JS -->
+                                    <div class="construction-folders">
+                                        <div class="folder-box" id="folder-html">
+                                            <div class="folder-top"><i data-lucide="folder"></i></div>
+                                            <span>HTML</span>
+                                        </div>
+                                        <div class="folder-box" id="folder-css">
+                                            <div class="folder-top"><i data-lucide="folder"></i></div>
+                                            <span>CSS</span>
+                                        </div>
+                                        <div class="folder-box" id="folder-js">
+                                            <div class="folder-top"><i data-lucide="folder"></i></div>
+                                            <span>JS</span>
+                                        </div>
+                                        <div class="folder-box" id="folder-assets">
+                                            <div class="folder-top"><i data-lucide="folder"></i></div>
+                                            <span>ASSETS</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- B. Web Graph Viewport -->
+                            <div class="viz-content" id="tab-graph">
+                                <div class="canvas-parent">
+                                    <canvas id="graph-canvas"></canvas>
+                                    <div class="graph-instructions">Drag nodes to explore. Scroll to zoom.</div>
+                                </div>
+                            </div>
+
+                            <!-- C. Asset Galaxy Viewport -->
+                            <div class="viz-content" id="tab-galaxy">
+                                <div class="canvas-parent">
+                                    <canvas id="galaxy-canvas"></canvas>
+                                    <div class="galaxy-tooltip" id="galaxy-tip">Hover asset planet to inspect parameters</div>
+                                    <div class="galaxy-legend">
+                                        <span class="legend-item"><span class="legend-dot html"></span>HTML</span>
+                                        <span class="legend-item"><span class="legend-dot css"></span>CSS</span>
+                                        <span class="legend-item"><span class="legend-dot js"></span>JS</span>
+                                        <span class="legend-item"><span class="legend-dot image"></span>Images</span>
+                                        <span class="legend-item"><span class="legend-dot font"></span>Fonts</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- D. Live Browser Preview Split Screen -->
+                            <div class="viz-content" id="tab-preview">
+                                <div class="browser-split-wrapper">
+                                    
+                                    <!-- Left Side: Original -->
+                                    <div class="preview-browser-panel glass-panel" id="browser-original">
+                                        <div class="browser-header">
+                                            <div class="dots"><span class="r"></span><span class="y"></span><span class="g"></span></div>
+                                            <div class="address-bar">Original Website</div>
+                                        </div>
+                                        <div class="browser-iframe-simulator" id="iframe-orig">
+                                            <div class="sim-page-content">
+                                                <header class="sim-header">
+                                                    <h2>Modern Portfolio</h2>
+                                                    <nav><span>Home</span><span>About</span><span>Works</span></nav>
+                                                </header>
+                                                <section class="sim-hero">
+                                                    <div class="avatar-circle"></div>
+                                                    <h3>Hi, I am Akash</h3>
+                                                    <p>Creative Web Engineer building interactive digital landscapes.</p>
+                                                    <button class="sim-btn">View Projects</button>
+                                                </section>
+                                                <section class="sim-projects">
+                                                    <h3>Selected Works</h3>
+                                                    <div class="sim-grid">
+                                                        <div class="sim-card">Project One</div>
+                                                        <div class="sim-card">Project Two</div>
+                                                    </div>
+                                                </section>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Right Side: Reconstructed -->
+                                    <div class="preview-browser-panel glass-panel" id="browser-replica">
+                                        <div class="browser-header">
+                                            <div class="dots"><span class="r"></span><span class="y"></span><span class="g"></span></div>
+                                            <div class="address-bar">Reconstructed WebCloner</div>
+                                            <button class="diff-toggle-btn glass-button" id="diff-btn" title="Toggle Code Diff Overlay">
+                                                <i data-lucide="code"></i> Diff
+                                            </button>
+                                        </div>
+                                        <div class="browser-iframe-simulator" id="iframe-repl">
+                                            <div class="sim-page-content">
+                                                <header class="sim-header">
+                                                    <h2>Modern Portfolio</h2>
+                                                    <nav><span>Home</span><span>About</span><span>Works</span></nav>
+                                                </header>
+                                                <section class="sim-hero">
+                                                    <div class="avatar-circle"></div>
+                                                    <h3>Hi, I am Akash</h3>
+                                                    <p>Creative Web Engineer building interactive digital landscapes.</p>
+                                                    <button class="sim-btn">View Projects</button>
+                                                </section>
+                                                <section class="sim-projects">
+                                                    <h3>Selected Works</h3>
+                                                    <div class="sim-grid">
+                                                        <div class="sim-card">Project One</div>
+                                                        <div class="sim-card">Project Two</div>
+                                                    </div>
+                                                </section>
+                                            </div>
+                                            <div class="diff-overlay" id="diff-code-overlay" style="display: none;">
+                                                <pre><code><span class="diff-del">- &lt;header class="sim-header-legacy"&gt;</span>
+<span class="diff-add">+ &lt;header class="sim-header"&gt;</span>
+  &lt;h2&gt;Modern Portfolio&lt;/h2&gt;
+<span class="diff-del">- &lt;nav style="display: flex; gap: 10px;"&gt;</span>
+<span class="diff-add">+ &lt;nav class="nav-links-flex"&gt;</span>
+  &lt;span&gt;Home&lt;/span&gt;...</code></pre>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- RIGHT COLUMN: EXPLORER & COMPRESSION DOWNLOAD -->
+                    <div class="workspace-col glass-panel" id="explorer-panel">
+                        <div class="panel-header">
+                            <h2><i data-lucide="folder-git-2"></i> Project Workspace</h2>
+                        </div>
+                        
+                        <!-- File Tree Explorer -->
+                        <div class="asset-explorer">
+                            <div class="tree-root">
+                                <div class="tree-folder open" id="tree-root-folder">
+                                    <div class="tree-item"><i data-lucide="chevron-down" class="chevron"></i><i data-lucide="folder" class="f"></i><span>webcloner-project/</span></div>
+                                    <div class="tree-children">
+                                        <div class="tree-item file disabled" id="file-html"><i data-lucide="file-code" class="code-f"></i><span>index.html</span></div>
+                                        
+                                        <div class="tree-folder open" id="tree-css-folder">
+                                            <div class="tree-item"><i data-lucide="chevron-down" class="chevron"></i><i data-lucide="folder" class="f"></i><span>css/</span></div>
+                                            <div class="tree-children">
+                                                <div class="tree-item file disabled" id="file-style-css"><i data-lucide="file-code" class="css-f"></i><span>style.css</span></div>
+                                                <div class="tree-item file disabled" id="file-animation-css"><i data-lucide="file-code" class="css-f"></i><span>animations.css</span></div>
+                                            </div>
+                                        </div>
+
+                                        <div class="tree-folder open" id="tree-js-folder">
+                                            <div class="tree-item"><i data-lucide="chevron-down" class="chevron"></i><i data-lucide="folder" class="f"></i><span>js/</span></div>
+                                            <div class="tree-children">
+                                                <div class="tree-item file disabled" id="file-app-js"><i data-lucide="file-code" class="js-f"></i><span>app.js</span></div>
+                                            </div>
+                                        </div>
+
+                                        <div class="tree-folder open" id="tree-assets-folder">
+                                            <div class="tree-item"><i data-lucide="chevron-down" class="chevron"></i><i data-lucide="folder" class="f"></i><span>assets/</span></div>
+                                            <div class="tree-children">
+                                                <div class="tree-item file disabled" id="file-logo"><i data-lucide="image" class="img-f"></i><span>logo.svg</span></div>
+                                                <div class="tree-item file disabled" id="file-bg"><i data-lucide="image" class="img-f"></i><span>hero-mesh.jpg</span></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Compression & Download Console -->
+                        <div class="download-container">
+                            <div class="compres-panel glass-panel" id="compress-stage">
+                                <div class="cube-wrapper">
+                                    <div class="cube" id="packaging-cube">
+                                        <div class="face front"></div>
+                                        <div class="face back"></div>
+                                        <div class="face right"></div>
+                                        <div class="face left"></div>
+                                        <div class="face top"></div>
+                                        <div class="face bottom"></div>
+                                    </div>
+                                </div>
+                                <div class="compres-log" id="compres-console-log">
+                                    <div class="log-line">System ready...</div>
+                                </div>
+                                <button class="cta-button download-btn" id="zip-download-btn" disabled>
+                                    <i data-lucide="archive"></i>
+                                    <span>AI Package Generator</span>
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                    
+                </div>
+                
+            </section>
+
+        </main>
+
+        <!-- PERSISTENT TIME TRAVEL REPLAY CONTROLLER (BOTTOM BAR) -->
+        <footer class="app-footer glass-panel" id="replay-controller" style="display: none;">
+            <div class="replay-controls">
+                <button class="replay-btn" id="replay-prev-btn" title="Step Backward"><i data-lucide="skip-back"></i></button>
+                <button class="replay-btn play" id="replay-play-btn" title="Play / Pause Replay"><i data-lucide="play" id="play-btn-icon"></i></button>
+                <button class="replay-btn" id="replay-next-btn" title="Step Forward"><i data-lucide="skip-forward"></i></button>
+                <button class="replay-btn" id="replay-speed-btn" title="Speed Factor"><span id="speed-label">1.0x</span></button>
+            </div>
+
+            <!-- Interactive scrubber timeline -->
+            <div class="timeline-wrapper">
+                <div class="timeline-bar-bg" id="timeline-scrub-bar">
+                    <div class="timeline-bar-progress" id="timeline-progress-fill"></div>
+                    <div class="timeline-handle" id="timeline-handle"></div>
+                </div>
+                <div class="timeline-nodes">
+                    <div class="timeline-node active" id="node-stage-1" data-progress="0">
+                        <span class="node-dot"></span>
+                        <span class="node-title">Scan</span>
+                    </div>
+                    <div class="timeline-node" id="node-stage-2" data-progress="25">
+                        <span class="node-dot"></span>
+                        <span class="node-title">Download</span>
+                    </div>
+                    <div class="timeline-node" id="node-stage-3" data-progress="50">
+                        <span class="node-dot"></span>
+                        <span class="node-title">Reconstruct</span>
+                    </div>
+                    <div class="timeline-node" id="node-stage-4" data-progress="75">
+                        <span class="node-dot"></span>
+                        <span class="node-title">Validate</span>
+                    </div>
+                    <div class="timeline-node" id="node-stage-5" data-progress="100">
+                        <span class="node-dot"></span>
+                        <span class="node-title">Deploy</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="timeline-details">
+                <span class="timestamp-label" id="timeline-time">00:00.00</span>
+                <span class="current-phase-label" id="timeline-phase-text">Phase: Initialization</span>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- AI Assistant Orb (Bottom Right) -->
+    <div class="ai-assistant-orb-container">
+        <!-- Floating Orb -->
+        <div class="ai-orb" id="ai-orb-btn" title="Open AI Migration Assistant">
+            <div class="ai-orb-inner"></div>
+            <div class="ai-orb-aura"></div>
+        </div>
+        <!-- Chat Console box -->
+        <div class="ai-chat-box glass-panel" id="ai-chat-console" style="display: none;">
+            <div class="chat-header">
+                <span class="chat-dot"></span>
+                <h3>Cloner AI Assistant</h3>
+                <button class="chat-close" id="chat-close-btn">&times;</button>
+            </div>
+            <div class="chat-messages" id="chat-messages-container">
+                <div class="chat-msg assistant">
+                    <div class="msg-bubble">Greetings! I am the WebCloner AI agent. Feed me questions like "Where is the CSS style loaded?" or "How can I download this code?". How can I assist your site replication process?</div>
+                </div>
+            </div>
+            <div class="chat-input-wrapper">
+                <input type="text" id="chat-input" placeholder="Type a message or click suggestions...">
+                <button class="chat-send-btn" id="chat-send-btn"><i data-lucide="send"></i></button>
+            </div>
+            <div class="chat-suggestions">
+                <button class="chat-suggest-chip" data-text="What is this missing logo file?">What is the logo file?</button>
+                <button class="chat-suggest-chip" data-text="How is the css layout organized?">How is CSS styled?</button>
+                <button class="chat-suggest-chip" data-text="Can you explain the website graph?">Explain page structure?</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main JavaScript Modules -->
+    <script type="module" src="app.js"></script>
+</body>
+</html>
